@@ -1,0 +1,19 @@
+name: sg3cleaner
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy>=1.23
+  - opencv
+  - pillow>=9.4
+  - tqdm>=4.65
+  - pandas>=1.5
+  - scikit-image>=0.20
+  - faiss-gpu  # CUDA 12 build pulled from pytorch channel
+  - pip:
+      - imagehash>=4.3.1
+      - insightface>=0.7.3
+      - onnxruntime-gpu>=1.17
+      - mediapipe>=0.10

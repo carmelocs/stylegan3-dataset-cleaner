@@ -19,16 +19,24 @@ git clone https://github.com/YOUR_USERNAME/stylegan3-dataset-cleaner.git
 cd stylegan3-dataset-cleaner
 ```
 
-### 2. Create and activate virtual environment
+<!-- ### 2. Create and activate virtual environment
 ```bash
-python -m venv venv
-source venv/bin/activate      # macOS/Linux
-venv\Scripts\activate         # Windows
+conda create -n sg3cleaner python=3.10 -y
+conda activate sg3cleaner
 ```
 
 ### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
+``` -->
+
+### 2. Build and activate
+```bash
+# Create environment
+conda env create -f environment.yml
+
+# Activate
+conda activate sg3cleaner
 ```
 
 ## 🚀 Usage
@@ -53,3 +61,41 @@ python scripts/run_cleaner.py \
 | `--max_brightness` | Max allowed brightness (grayscale mean)       | 180      |
 | `--min_saturation` | Min allowed saturation (HSV)                  | 0.12     |
 | `--max_saturation` | Max allowed saturation (HSV)                  | 0.55     |
+
+## 📂 Outputs
+
+`cleaned_dataset/images/` → aligned 512×512 PNGs
+
+`cleaned_dataset/manifest_pre_dedupe.csv` → before deduplication
+
+`cleaned_dataset/manifest_final.csv` → after deduplication
+
+`datasets/<inputname>-512x512.zip` → ready-to-train StyleGAN3 dataset (if you enable zipping in the pipeline)
+
+
+## 🧩 Project Structure
+```bash
+cleaner/
+├─ align.py      # face detection & alignment
+├─ quality.py    # image quality checks
+├─ color.py      # color normalization
+├─ dedupe.py     # duplicate removal
+├─ utils.py      # helpers
+├─ pipeline.py   # orchestrates cleaning
+scripts/
+└─ run_cleaner.py # CLI entrypoint
+examples/
+└─ reference.jpg  # optional neutral reference
+```
+
+## 🛠️ Notes
+```bash
+For best results, install InsightFace with GPU support (onnxruntime-gpu) and FAISS (faiss-gpu).
+
+Mediapipe fallback works but is less precise for alignment.
+
+Tune thresholds depending on your dataset quality.
+```
+
+## 📜 License
+MIT License
