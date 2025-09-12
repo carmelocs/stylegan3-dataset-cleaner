@@ -1,0 +1,14 @@
+# Core
+opencv-python>=4.6
+numpy>=1.23
+Pillow>=9.4
+tqdm>=4.65
+pandas>=1.5
+scikit-image>=0.20
+imagehash>=4.3.1
+
+# Optional
+insightface>=0.7.3       # face detection + embeddings
+onnxruntime>=1.14        # CPU runtime for insightface
+mediapipe>=0.10          # fallback face alignment
+faiss-gpu>=1.7.3         # deduplication (install faiss-gpu if CUDA available)
