@@ -15,7 +15,7 @@ This tool:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/stylegan3-dataset-cleaner.git
+git clone https://github.com/carmelocs/stylegan3-dataset-cleaner.git
 cd stylegan3-dataset-cleaner
 ```
 
