@@ -30,9 +30,14 @@ except Exception:
 
 
 class FaceAligner:
-    """Detects a single face and aligns it to a canonical 512×512 crop."""
+    """Detects a single face and aligns it to the input image size (keeps original)."""
 
-    def __init__(self, min_conf=0.9, output_size=512, scale=1.3):
+    def __init__(self, min_conf=0.9, output_size=None, scale=1.3):
+        """
+        output_size:
+          - None → keep same size as input
+          - int  → resize to this fixed size (e.g., 512 for StyleGAN training)
+        """
         self.min_conf = min_conf
         self.output_size = output_size
         self.scale = scale
@@ -57,12 +62,22 @@ class FaceAligner:
             raise RuntimeError("No alignment backend found (install insightface or mediapipe).")
 
     def align(self, img_bgr):
-        """Align one face, return aligned 512×512 image and metadata dict."""
+        """Align face, return aligned image same size as input (or fixed size if given)."""
         if self.backend == "insightface":
-            return self._align_insightface(img_bgr)
-        elif self.backend == "mediapipe":
-            return self._align_mediapipe(img_bgr)
+            aligned, meta = self._align_insightface(img_bgr)
+        else:
+            aligned, meta = self._align_mediapipe(img_bgr)
 
+        if aligned is None:
+            return None, meta
+
+        # 🔑 If output_size is None → resize back to original
+        if self.output_size is None:
+            h, w = img_bgr.shape[:2]
+            aligned = cv2.resize(aligned, (w, h), interpolation=cv2.INTER_AREA)
+
+        return aligned, meta
+    
     def _align_insightface(self, img_bgr):
         faces = self.app.get(img_bgr)
         faces = [f for f in faces if f.det_score >= self.min_conf]
