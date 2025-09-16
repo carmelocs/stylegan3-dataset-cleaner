@@ -21,18 +21,19 @@ from .utils import ensure_dir, save_png, unique_filename
 
 
 class CleanerPipeline:
-    def __init__(self, input_dir, out_dir, min_conf, ref_image=None, thresholds=None):
+    def __init__(self, input_dir, out_dir, min_conf, face_scale, ref_image=None, thresholds=None):
         self.input_dir = Path(input_dir)
         self.out_dir = Path(out_dir)
         self.ref_image = cv2.imread(ref_image) if ref_image else None
         if self.ref_image is not None:
             self.ref_image = cv2.resize(self.ref_image, (512, 512))
         self.min_conf = min_conf
+        self.face_scale = face_scale
         self.thresholds = thresholds or {}
         ensure_dir(self.out_dir / "images")
 
     def run(self):
-        aligner = FaceAligner(min_conf=self.min_conf)
+        aligner = FaceAligner(min_conf=self.min_conf, face_scale=self.face_scale)
         img_paths = sorted([p for p in self.input_dir.rglob("*") if p.suffix.lower() in (".jpg", ".png", ".jpeg")])
         manifest, out_paths = [], []
 

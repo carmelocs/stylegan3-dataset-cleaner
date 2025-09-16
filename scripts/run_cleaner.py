@@ -21,6 +21,9 @@ def main():
     # minimum face detection confidence
     p.add_argument("--min_conf", type=float, default=0.9,
                    help="Minimum face detection confidence (0–1).")
+    
+    p.add_argument("--face_scale", type=float, default=2.5,
+               help="背景保留比例，1.0=紧贴人脸，2.5=保留更多背景")
 
     args = p.parse_args()
 
@@ -38,7 +41,8 @@ def main():
         args.out_dir,
         ref_image=args.ref_image,
         thresholds=thresholds,
-        min_conf=args.min_conf
+        min_conf=args.min_conf,
+        face_scale=args.face_scale
     )
     pipe.run()
 
