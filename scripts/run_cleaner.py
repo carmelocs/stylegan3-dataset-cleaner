@@ -2,6 +2,13 @@
 CLI entrypoint to run the dataset cleaner pipeline.
 """
 
+import sys
+import os
+
+# Add the project root directory to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
 import argparse
 from cleaner.pipeline import CleanerPipeline
 
@@ -19,7 +26,7 @@ def main():
     p.add_argument("--max_saturation", type=float, default=0.55)
 
     # minimum face detection confidence
-    p.add_argument("--min_conf", type=float, default=0.9,
+    p.add_argument("--min_conf", type=float, default=0.7,
                    help="Minimum face detection confidence (0–1).")
     
     p.add_argument("--face_scale", type=float, default=2.5,
