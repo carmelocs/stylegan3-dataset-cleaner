@@ -3,6 +3,7 @@
 A modular Python pipeline for cleaning and aligning face/selfie datasets before training with [StyleGAN3](https://github.com/NVlabs/stylegan3).
 
 This tool:
+
 - Detects & aligns faces to **512×512** crops (InsightFace preferred, Mediapipe fallback).
 - Filters low-quality images (blur, bad exposure, oversaturation).
 - Normalizes colors to a reference image (LAB mean/variance).
@@ -14,6 +15,7 @@ This tool:
 ## 🔧 Installation
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/carmelocs/stylegan3-dataset-cleaner.git
 cd stylegan3-dataset-cleaner
@@ -31,6 +33,7 @@ pip install -r requirements.txt
 ``` -->
 
 ### 2. Build and activate
+
 ```bash
 # Create environment
 conda env create -f environment.yml
@@ -42,6 +45,7 @@ conda activate sg3cleaner
 ## 🚀 Usage
 
 Run the pipeline on a folder of raw images:
+
 ```bash
 python scripts/run_cleaner.py \
   --input_dir ./raw_images \
@@ -72,8 +76,8 @@ python scripts/run_cleaner.py \
 
 `datasets/<inputname>-512x512.zip` → ready-to-train StyleGAN3 dataset (if you enable zipping in the pipeline)
 
-
 ## 🧩 Project Structure
+
 ```bash
 cleaner/
 ├─ align.py      # face detection & alignment
@@ -89,6 +93,7 @@ examples/
 ```
 
 ## 🛠️ Notes
+
 ```bash
 For best results, install InsightFace with GPU support (onnxruntime-gpu) and FAISS (faiss-gpu).
 
@@ -98,4 +103,5 @@ Tune thresholds depending on your dataset quality.
 ```
 
 ## 📜 License
+
 MIT License
