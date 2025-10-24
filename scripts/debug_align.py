@@ -4,8 +4,13 @@ debug_align.py
 可视化调试人脸检测与对齐 (含背景保留比例)
 """
 
-import cv2
+import sys
 import os
+# Add the project root directory to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
+import cv2
 import glob
 import argparse
 from cleaner.align import FaceAligner
